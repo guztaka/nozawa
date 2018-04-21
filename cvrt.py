@@ -29,11 +29,13 @@ def multiple_replace(text, adict):
 
 original_text = '大変だ！抽選10回もできるぞ！（基本5回、ツイートで5回）'
 
+# csvファイルから辞書データを作成
 with open('dict.csv', 'r') as f:
     csvdata = csv.reader(f)
     data = [x for x in csvdata]
 
 datadic = dict(data)
+
 APPID = sys.argv[1]
 api = GoolabsAPI(APPID)
 
