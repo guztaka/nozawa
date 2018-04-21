@@ -3,6 +3,7 @@
 from goolabs import GoolabsAPI
 import sys
 import re
+import csv
 
 
 def multiple_replace(text, adict):
@@ -28,19 +29,17 @@ def multiple_replace(text, adict):
 
 original_text = '大変だ！抽選10回もできるぞ！（基本5回、ツイートで5回）'
 
-trans_tone = {
-    'あい': 'えぇ',
-    'かい': 'けぇ',
-    'さい': 'せぇ',
-    'たい': 'てぇ'
-}
+with open('dict.csv', 'r') as f:
+    csvdata = csv.reader(f)
+    data = [x for x in csvdata]
 
+datadic = dict(data)
 APPID = sys.argv[1]
 api = GoolabsAPI(APPID)
 
 req = api.hiragana(sentence=original_text, output_type='hiragana')
 
-after = multiple_replace(req['converted'], trans_tone)
+after = multiple_replace(req['converted'], datadic)
 
 print('Before:\t' + original_text)
 print('After:\t' + after)
